@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif 
 
 public class MenuTitleScreen : MonoBehaviour
 {
+    public TextMeshProUGUI elfManagerName;
+
+    private void Update()
+    {
+        ElfManagerName.Instance.managerNameText = elfManagerName.text;
+    }
 
     public void StartShift()
     {

@@ -28,11 +28,18 @@ public class ElfManager : MonoBehaviour
 
     public float speedModifier = 10f;
     private ElfControl elfControl;
+    private bool shiftOver = false;
 
     private void Start()
     {
 
         elfControl = GameObject.Find("Elf").GetComponent<ElfControl>();
+    }
+
+    public void GetToWork()
+    {
+        elfControl.timeToRest = false;
+        elfControl.elfIsWorking = true;
     }
 
     public void IncreaseSpeed()
@@ -43,5 +50,11 @@ public class ElfManager : MonoBehaviour
     public void DecreaseSpeed()
     {
         elfControl.speed -= speedModifier;
+    }
+
+    public void TimeToRest()
+    {
+        elfControl.elfIsWorking = false;
+        elfControl.timeToRest = true;
     }
 }

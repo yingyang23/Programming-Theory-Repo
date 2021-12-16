@@ -16,6 +16,7 @@ public class ElfControl : Staff
     // Update is called once per frame
 
     public GameObject[] waypoints;
+    public GameObject restingSpot;
     int currentWP = 0;
 
     private float m_speed = 10.0f;
@@ -35,9 +36,10 @@ public class ElfControl : Staff
             }
         }
     }
-
+    public float windDownSpeed = 4.0f;
     public float rotSpeed = 10.0f;
     public bool elfIsWorking = false;
+    public bool timeToRest = false;
 
     private ToyPile toyPile;
 
@@ -63,6 +65,11 @@ public class ElfControl : Staff
             GiftsToSleigh();
         }
 
+        if(!elfIsWorking && timeToRest == true)
+        {
+            TimeToRest();
+        }
+
         GetProductivity();
         Debug.Log(GetProductivity());
 
@@ -80,6 +87,12 @@ public class ElfControl : Staff
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
 
+    public void TimeToRest()
+    {
+        this.transform.LookAt(restingSpot.transform);
+        this.transform.Translate(0, 0, windDownSpeed * Time.deltaTime);
+    }
+
     public override string GetStatus()
     {
         return gameObject.name;
@@ -89,7 +102,6 @@ public class ElfControl : Staff
     {
         string Productivity = "Working speed = " + m_speed;
         return Productivity;
-        
     }
 
     private void OnTriggerEnter(Collider other)
