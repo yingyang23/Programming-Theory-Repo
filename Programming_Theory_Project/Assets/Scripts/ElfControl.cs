@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ElfControl : MonoBehaviour
+public class ElfControl : Staff
 {
 
     /*public NavMeshAgent agent;
@@ -18,7 +18,7 @@ public class ElfControl : MonoBehaviour
     public GameObject[] waypoints;
     int currentWP = 0;
 
-    public float m_speed = 10.0f;
+    private float m_speed = 10.0f;
     public float speed
     {
         get { return m_speed; }
@@ -39,6 +39,13 @@ public class ElfControl : MonoBehaviour
     public float rotSpeed = 10.0f;
     public bool elfIsWorking = false;
 
+    private ToyPile toyPile;
+
+    private void Start()
+    {
+        toyPile = GameObject.FindWithTag("Toy Pile").GetComponent<ToyPile>();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -55,7 +62,10 @@ public class ElfControl : MonoBehaviour
         {
             GiftsToSleigh();
         }
-        
+
+        GetProductivity();
+        Debug.Log(GetProductivity());
+
     }
 
     void GiftsToSleigh ()
@@ -69,5 +79,34 @@ public class ElfControl : MonoBehaviour
 
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
+
+    public override string GetStatus()
+    {
+        return gameObject.name;
+    }
+
+    public override string GetProductivity()
+    {
+        string Productivity = "Working speed = " + m_speed;
+        return Productivity;
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Toy Pile"))
+        {
+            other.gameObject.GetComponent<ToyPile>().toyCount -= 1;
+            Debug.Log("Elf touched Toy Pile");
+        }
+
+        if (other.gameObject.CompareTag("Sleigh Sack"))
+        {
+            other.gameObject.GetComponent<SackSleigh>().toyCount += 1;
+            Debug.Log("Sack touched by Elf");
+        }
+    }
+
+    
 
 }
