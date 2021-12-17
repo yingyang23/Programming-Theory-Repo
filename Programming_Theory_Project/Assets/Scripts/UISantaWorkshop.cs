@@ -68,6 +68,8 @@ public class UISantaWorkshop : MonoBehaviour
         else
         {
             StopCoroutine(BurnOutLeave());
+            burnOutWarning.text = "";
+
         }
         
     }
