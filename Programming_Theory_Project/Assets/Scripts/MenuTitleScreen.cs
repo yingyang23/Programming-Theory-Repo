@@ -9,7 +9,7 @@ using UnityEditor;
 
 public class MenuTitleScreen : MonoBehaviour
 {
-    public TextMeshProUGUI elfManagerName;
+    [SerializeField] private TextMeshProUGUI elfManagerName;
 
     private void Update()
     {

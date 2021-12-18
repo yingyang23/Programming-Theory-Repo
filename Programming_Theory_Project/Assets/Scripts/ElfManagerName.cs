@@ -6,10 +6,8 @@ using TMPro;
 
 public class ElfManagerName : MonoBehaviour
 {
-
     public static ElfManagerName Instance;
     public string managerNameText;
-    
 
     private void Awake()
     {
@@ -21,15 +19,5 @@ public class ElfManagerName : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

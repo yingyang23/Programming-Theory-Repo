@@ -9,43 +9,40 @@ public class UISantaWorkshop : MonoBehaviour
     private ElfControl elfControl;
     private SackSleigh sackSleigh;
 
-    public TextMeshProUGUI elftManagerName;
-    public TextMeshProUGUI presentsInSleigh;
-    public TextMeshProUGUI burnOutWarning;
-    public TextMeshProUGUI burnOutLeave;
+    [SerializeField] private TextMeshProUGUI elfManagerName;
+    [SerializeField] private TextMeshProUGUI presentsInSleigh;
+    [SerializeField] private TextMeshProUGUI burnOutWarning;
+    [SerializeField] private TextMeshProUGUI burnOutLeave;
     
 
     [SerializeField] private GameObject elf;
     [SerializeField] private GameObject shiftWorkCanvas;
     [SerializeField] private GameObject restartButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         elfControl = GameObject.Find("Elf").GetComponent<ElfControl>();
         sackSleigh = GameObject.Find("SleighSack").GetComponent<SackSleigh>();
         if(ElfManagerName.Instance != null)
         {
-            elftManagerName.SetText("Elf Manager: " + ElfManagerName.Instance.managerNameText);
+            elfManagerName.SetText("Elf Manager: " + ElfManagerName.Instance.managerNameText);
         }
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (elfControl.speed == 60)
         {
+            burnOutWarning.gameObject.SetActive(true);
             StartCoroutine(BurnOutLeave());
-            //Invoke("LostToBurnOut", 6);
+        }
+        else
+        {
+            burnOutWarning.gameObject.SetActive(false);
         }
 
         presentsInSleigh.SetText("Presents in Sleigh: " + sackSleigh.toyCount);
-    }
-
-    void LostToBurnOut()
-    {
-        //GameObject.FindWithTag("Elf").GetComponent<MeshRenderer>().enabled = false;     
     }
 
     public void BackToMenu()
@@ -55,9 +52,8 @@ public class UISantaWorkshop : MonoBehaviour
 
     IEnumerator BurnOutLeave()
     {
-        burnOutWarning.gameObject.SetActive(true);
         yield return new WaitForSeconds(6);
-        if (elfControl.speed == 60)
+        if (elfControl.speed == 60 && !elfControl.timeToRest)
         {
             elf.SetActive(false);
             shiftWorkCanvas.SetActive(false);
@@ -67,11 +63,8 @@ public class UISantaWorkshop : MonoBehaviour
         }
         else
         {
-            StopCoroutine(BurnOutLeave());
-            burnOutWarning.text = "";
-
+            burnOutWarning.gameObject.SetActive(false);
+            StopAllCoroutines();
         }
-        
     }
-
 }

@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// INHERITANCE
 public class ElfControl : Staff
 {
+    [SerializeField] private GameObject[] waypoints;
+    [SerializeField] private GameObject restingSpot;
+    public int currentWP = 0;
 
-    /*public NavMeshAgent agent;
-    // Start is called before the first frame update
-    void Start()
-    {
-        agent = this.GetComponent<NavMeshAgent>();
-    }*/
-
-    // Update is called once per frame
-
-    public GameObject[] waypoints;
-    public GameObject restingSpot;
-    int currentWP = 0;
-
+    // ENCAPSULATION
+    [SerializeField]
     private float m_speed = 10.0f;
     public float speed
     {
@@ -36,8 +29,8 @@ public class ElfControl : Staff
             }
         }
     }
-    public float windDownSpeed = 4.0f;
-    public float rotSpeed = 10.0f;
+
+    [SerializeField] private float windDownSpeed = 4.0f;
     public bool elfIsWorking = false;
     public bool timeToRest = false;
 
@@ -50,19 +43,15 @@ public class ElfControl : Staff
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            elfIsWorking = true;
-        }
-
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            elfIsWorking = false;
-        }
             
         if(elfIsWorking)
         {
             GiftsToSleigh();
+        }
+
+        if(timeToRest == true)
+        {
+            speed = 10f;
         }
 
         if(!elfIsWorking && timeToRest == true)
@@ -71,10 +60,10 @@ public class ElfControl : Staff
         }
 
         GetProductivity();
-        Debug.Log(GetProductivity());
 
     }
 
+    // ABSTRACTION
     void GiftsToSleigh ()
     {
         if (Vector3.Distance(this.transform.position, waypoints[currentWP].transform.position) < 2)
@@ -87,17 +76,20 @@ public class ElfControl : Staff
         this.transform.Translate(0, 0, speed * Time.deltaTime);
     }
 
-    public void TimeToRest()
+    // ABSTRACTION
+    void TimeToRest()
     {
         this.transform.LookAt(restingSpot.transform);
         this.transform.Translate(0, 0, windDownSpeed * Time.deltaTime);
     }
 
+    // POLYMORPHISM
     public override string GetStatus()
     {
         return gameObject.name;
     }
 
+    // POLYMORPHISM
     public override string GetProductivity()
     {
         string Productivity = "Working speed = " + m_speed;
@@ -109,13 +101,11 @@ public class ElfControl : Staff
         if (other.gameObject.CompareTag("Toy Pile"))
         {
             other.gameObject.GetComponent<ToyPile>().toyCount -= 1;
-            Debug.Log("Elf touched Toy Pile");
         }
 
         if (other.gameObject.CompareTag("Sleigh Sack"))
         {
             other.gameObject.GetComponent<SackSleigh>().toyCount += 1;
-            Debug.Log("Sack touched by Elf");
         }
     }
 
