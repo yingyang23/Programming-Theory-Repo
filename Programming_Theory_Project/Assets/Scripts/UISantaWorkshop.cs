@@ -8,9 +8,12 @@ public class UISantaWorkshop : MonoBehaviour
 {
     private ElfControl elfControl;
     private SackSleigh sackSleigh;
+    private ToyPile toyPile;
 
     [SerializeField] private TextMeshProUGUI elfManagerName;
+    [SerializeField] private TextMeshProUGUI subordinateSpeed;
     [SerializeField] private TextMeshProUGUI presentsInSleigh;
+    [SerializeField] private TextMeshProUGUI toyPileCount;
     [SerializeField] private TextMeshProUGUI burnOutWarning;
     [SerializeField] private TextMeshProUGUI burnOutLeave;
     
@@ -23,6 +26,8 @@ public class UISantaWorkshop : MonoBehaviour
     {
         elfControl = GameObject.Find("Elf").GetComponent<ElfControl>();
         sackSleigh = GameObject.Find("SleighSack").GetComponent<SackSleigh>();
+        toyPile = GameObject.Find("Toy Pile").GetComponent<ToyPile>();
+
         if(ElfManagerName.Instance != null)
         {
             elfManagerName.SetText("Elf Manager: " + ElfManagerName.Instance.managerNameText);
@@ -42,7 +47,17 @@ public class UISantaWorkshop : MonoBehaviour
             burnOutWarning.gameObject.SetActive(false);
         }
 
-        presentsInSleigh.SetText("Presents in Sleigh: " + sackSleigh.toyCount);
+        if(elfControl.elfIsWorking == true)
+        { 
+        subordinateSpeed.SetText(elfControl.GetProductivity());
+        }
+        else
+        {
+            subordinateSpeed.SetText("Subordinate resting");
+        }
+
+        presentsInSleigh.SetText(sackSleigh.Inventory());
+        toyPileCount.SetText(toyPile.Inventory());
     }
 
     public void BackToMenu()

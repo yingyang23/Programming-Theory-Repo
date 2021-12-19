@@ -10,7 +10,7 @@ public class SackSleigh : Production
     // POLYMORPHISM
     public override string Inventory()
     {
-        string toysinSack = "Toys in sack = " + toyCount;
+        string toysinSack = "Toys in sack: " + toyCount;
         return toysinSack;
     }
 }

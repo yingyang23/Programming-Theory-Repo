@@ -29,5 +29,4 @@ public class MenuTitleScreen : MonoBehaviour
         Application.Quit();
     #endif
     }
-
 }

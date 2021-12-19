@@ -92,8 +92,9 @@ public class ElfControl : Staff
     // POLYMORPHISM
     public override string GetProductivity()
     {
-        string Productivity = "Working speed = " + m_speed;
+        string Productivity = "Subordinate's speed: " + m_speed + " u/s";
         return Productivity;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,10 +106,7 @@ public class ElfControl : Staff
 
         if (other.gameObject.CompareTag("Sleigh Sack"))
         {
-            other.gameObject.GetComponent<SackSleigh>().toyCount += 1;
+            other.gameObject.GetComponent<SackSleigh>().toyCount = 1000 - toyPile.toyCount;
         }
     }
-
-    
-
 }
