@@ -18,7 +18,7 @@ public class MenuTitleScreen : MonoBehaviour
 
     public void StartShift()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadScene(1);
     }
 
     public void Exit()

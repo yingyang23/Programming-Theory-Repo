@@ -62,7 +62,7 @@ public class UISantaWorkshop : MonoBehaviour
 
     public void BackToMenu()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator BurnOutLeave()

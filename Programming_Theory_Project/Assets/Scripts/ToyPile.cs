@@ -15,7 +15,7 @@ public class ToyPile : Production
     // POLYMORPHISM
     public override string Inventory()
     {
-        string toyPileInventory = "Toy Count: " + toyCount;
+        string toyPileInventory = "Wrapped presents: " + toyCount;
         return toyPileInventory;
     }
 }
